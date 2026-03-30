@@ -18,8 +18,10 @@
   },
   "homepage": "https://github.com/gokul-subramaniam/IdeaOn#readme",
   "dependencies": {
+    "bcrypt": "^6.0.0",
     "dotenv": "^17.3.1",
     "express": "^5.2.1",
+    "jsonwebtoken": "^9.0.3",
     "pg": "^8.20.0"
   }
 }

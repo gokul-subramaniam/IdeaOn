@@ -17,6 +17,9 @@ app.use('/organizations', organizationsRouter);
 const suggestionsRouter = require('./routes/suggestions');
 app.use('/suggestions', suggestionsRouter);
 
+const authRouter = require('./routes/auth');
+app.use('/auth', authRouter);
+
 app.get('/', (req, res) => {
   res.json({ message: 'IdeaOn API is running!' });
 });
