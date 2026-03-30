@@ -11,6 +11,12 @@ app.use(express.json());
 const usersRouter = require('./routes/users');
 app.use('/users', usersRouter);
 
+const organizationsRouter = require('./routes/organizations');
+app.use('/organizations', organizationsRouter);
+
+const suggestionsRouter = require('./routes/suggestions');
+app.use('/suggestions', suggestionsRouter);
+
 app.get('/', (req, res) => {
   res.json({ message: 'IdeaOn API is running!' });
 });
