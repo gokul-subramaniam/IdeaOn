@@ -23,6 +23,12 @@ app.use('/auth', authRouter);
 const flagsRouter = require('./routes/flags');
 app.use('/flags', flagsRouter);
 
+const pinnedRouter = require('./routes/pinned');
+app.use('/pinned', pinnedRouter);
+
+const notificationsRouter = require('./routes/notifications');
+app.use('/notifications', notificationsRouter);
+
 app.get('/', (req, res) => {
   res.json({ message: 'IdeaOn API is running!' });
 });
