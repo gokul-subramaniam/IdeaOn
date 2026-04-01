@@ -20,6 +20,9 @@ app.use('/suggestions', suggestionsRouter);
 const authRouter = require('./routes/auth');
 app.use('/auth', authRouter);
 
+const flagsRouter = require('./routes/flags');
+app.use('/flags', flagsRouter);
+
 app.get('/', (req, res) => {
   res.json({ message: 'IdeaOn API is running!' });
 });
