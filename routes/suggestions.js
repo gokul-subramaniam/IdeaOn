@@ -73,4 +73,49 @@ router.post('/:slug', authenticateToken, async (req, res) => {
   }
 });
 
+// POST reply to a suggestion
+router.post('/:slug/reply/:suggestion_id', authenticateToken, async (req, res) => {
+  try {
+    const { slug, suggestion_id } = req.params;
+    const { body } = req.body;
+    const user_id = req.user.userId;
+
+    // Step 1 — find the org_id from slug
+    const orgResult = await pool.query(
+      'SELECT id FROM organizations WHERE slug = $1',
+      [slug]
+    );
+
+    if (orgResult.rows.length === 0) {
+      return res.status(404).json({ error: 'Organization not found' });
+    }
+
+    const org_id = orgResult.rows[0].id;
+
+    // Step 2 — check parent suggestion exists
+    const parentResult = await pool.query(
+      'SELECT id FROM suggestions WHERE id = $1',
+      [suggestion_id]
+    );
+
+    if (parentResult.rows.length === 0) {
+      return res.status(404).json({ error: 'Suggestion not found' });
+    }
+
+    // Step 3 — insert reply
+    const result = await pool.query(
+      'INSERT INTO suggestions (user_id, org_id, body, parent_id) VALUES ($1, $2, $3, $4) RETURNING *',
+      [user_id, org_id, body, suggestion_id]
+    );
+
+    res.status(201).json(result.rows[0]);
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ error: 'Server error' });
+  }
+});
+
+
+
+
 module.exports = router;
